@@ -1,0 +1,7 @@
+{
+  "name": "NODE_TYPESCRIPT",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Vinicius Abdon <vinicius.alves39@fatec.sp.gov.br>",
+  "license": "MIT"
+}
