@@ -15,3 +15,9 @@
 
 ## Lib git-commitmsg-linter
     - Responsável por realizar o linter das mensagens de commit.
+
+## Lib husky
+    - Será responsável pelo linter do codigo em seu pré commit.
+
+## lib lint-staged
+    - Será responsável por realizar o lint apenas do código que se encontra na area de steged do git
