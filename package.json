@@ -1,7 +1,10 @@
 {
-  "name": "NODE_TYPESCRIPT",
+  "name": "noda-typescript",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Vinicius Abdon <vinicius.alves39@fatec.sp.gov.br>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-commit-msg-linter": "^4.8.3"
+  }
 }
