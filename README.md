@@ -12,4 +12,6 @@
 	# git amend para concatenar mudanças ao commit anterior
 	amend = !git add . && git commit --amend --no-edit
 	l = !git log --pretty=format:'%C(blue)%h%C(red)%d %C(white)%s %C(cyan)[%cn] %C(green)%cr'
-    
+
+## Lib git-commitmsg-linter
+    - Responsável por realizar o linter das mensagens de commit.
