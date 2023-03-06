@@ -1,9 +1,14 @@
 import { MissingParamError } from "../../error/missing-param-error";
 import { SignUpController } from "./signup";
 
+// Criar um factory para os mocks
+const makeSut = (): SignUpController => {
+  return new SignUpController();
+}
+
 describe('Signup Controller', () => {
   test('Should return 400 if no name is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
 
     const httpRequest = {
       body: {
@@ -20,7 +25,7 @@ describe('Signup Controller', () => {
   })
 
   test('Should return 400 if no email is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
 
     const httpRequest = {
       body: {
@@ -37,7 +42,7 @@ describe('Signup Controller', () => {
   })
 
   test('Should return 400 if no email is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
 
     const httpRequest = {
       body: {
@@ -54,7 +59,7 @@ describe('Signup Controller', () => {
   })
 
   test('Should return 400 if no passwordConfirm is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
 
     const httpRequest = {
       body: {
