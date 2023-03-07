@@ -25,7 +25,7 @@ const makeAddAccount = (): AddAccount => {
       const fakeAccount: AccountModel = {
         id: 'valid_id',
         name: 'valid_name',
-        email: 'valid_email',
+        email: 'valid_email@mail.com',
         password: 'valid_password'
       };
 
@@ -61,10 +61,10 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(400);
-    expect(httResponse.body).toEqual(new MissingParamError('name'));
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError('name'));
   })
 
   test('Should return 400 if no email is provided', () => {
@@ -78,10 +78,10 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(400);
-    expect(httResponse.body).toEqual(new MissingParamError('email'));
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError('email'));
   })
 
   test('Should return 400 if no email is provided', () => {
@@ -95,10 +95,10 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(400);
-    expect(httResponse.body).toEqual(new MissingParamError('password'));
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError('password'));
   })
 
   test('Should return 400 if no passwordConfirm is provided', () => {
@@ -112,10 +112,10 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(400);
-    expect(httResponse.body).toEqual(new MissingParamError('passwordConfirm'));
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirm'));
   })
 
   test('Should return 400 if passwordConfirm fails', () => {
@@ -130,10 +130,10 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(400);
-    expect(httResponse.body).toEqual(new InvalidParamError('passwordConfirm'));
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirm'));
   })
 
   test('Should return 400 if an invalid email provided', () => {
@@ -149,10 +149,10 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(400);
-    expect(httResponse.body).toEqual(new InvalidParamError('email'));
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError('email'));
   })
 
   test('Should call emailValidator if an correct email', () => {
@@ -209,10 +209,10 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(500);
-    expect(httResponse.body).toEqual(new ServerError());
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
   })
 
   test('Should return 500 if AddAccount throws', () => {
@@ -231,9 +231,32 @@ describe('Signup Controller', () => {
       }
     }
 
-    const httResponse = sut.handle(httpRequest);
+    const httpResponse = sut.handle(httpRequest);
 
-    expect(httResponse.statusCode).toBe(500);
-    expect(httResponse.body).toEqual(new ServerError());
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
+  })
+
+  test('Should return 200 if valid data is provided', () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        email: 'valid_email@email.com',
+        password: 'valid_password',
+        passwordConfirm: 'valid_password'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email@mail.com',
+      password: 'valid_password'
+    });
   })
 })
