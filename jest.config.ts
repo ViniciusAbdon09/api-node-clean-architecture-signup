@@ -10,3 +10,5 @@ export const configDefault = {
     '.+\\.ts$': 'ts-jest'
   },
 };
+
+export default configDefault
