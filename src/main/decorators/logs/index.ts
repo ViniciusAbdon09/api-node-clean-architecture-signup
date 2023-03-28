@@ -1,6 +1,6 @@
 import { Controller, HttpRequest, HttpResponse } from "../../../presentation/protocols";
 
-export class LogControllerDecorator<T> implements Controller {
+export class LogControllerDecorator<T = any> implements Controller {
   constructor(private readonly controller: Controller) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse<T>> {
