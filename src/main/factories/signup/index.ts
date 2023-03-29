@@ -6,6 +6,7 @@ import { AccountMomoryRepository } from '../../../infra/db/memoryDB/accountRepos
 import { Controller } from '../../../presentation/protocols';
 import { AccountModel } from '../../../domain/models/account';
 import { LogControllerDecorator } from '../../decorators/logs';
+import { LogMomoryRepository } from '../../../infra/db/memoryDB/logRepository/log';
 
 export const makeSignupController = (): Controller => {
   const salt = 12;
@@ -14,5 +15,6 @@ export const makeSignupController = (): Controller => {
   const addAccountRepository = new AccountMomoryRepository();
   const addAccount = new DBAddAccount(encrypter, addAccountRepository);
   const signUpController = new SignUpController(emailValidator, addAccount);
-  return new LogControllerDecorator<AccountModel>(signUpController);
+  const errorRepository = new LogMomoryRepository();
+  return new LogControllerDecorator<AccountModel>(signUpController, errorRepository);
 }
