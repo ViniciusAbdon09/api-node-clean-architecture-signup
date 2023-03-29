@@ -8,6 +8,11 @@ export const adapteRoute = (controller: Controller) => {
     }
 
     const httpResponse = await controller.handle(httpRequest);
-    response.status(httpResponse.statusCode).json(httpRequest.body)
+    if (httpResponse.statusCode === 200) {
+      response.status(httpResponse.statusCode).json(httpRequest.body)
+    } else {
+      const messageError = httpResponse.body.message ?? 'Something unexpected happened, try again later';
+      response.status(httpResponse.statusCode).json({ error: messageError })
+    }
   }
 }
