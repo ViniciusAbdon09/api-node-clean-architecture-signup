@@ -1,6 +1,16 @@
 import { clientMemoryDB } from "../helpers/repository-in-memory-helper";
 import { LogMomoryRepository } from "./log";
 
+interface SutTypes {
+  sut: LogMomoryRepository
+};
+
+const makeSut = (): SutTypes => {
+  const sut = new LogMomoryRepository();
+
+  return { sut };
+}
+
 describe('Log DB Memory', () => {
   afterAll(() => {
     clientMemoryDB.reset();
@@ -12,7 +22,7 @@ describe('Log DB Memory', () => {
   })
 
   test('Should create an error log on success', async () => {
-    const sut = new LogMomoryRepository();
+    const { sut } = makeSut();
     await sut.logError('any_error');
 
     const count = clientMemoryDB.getAll('errors').length;
