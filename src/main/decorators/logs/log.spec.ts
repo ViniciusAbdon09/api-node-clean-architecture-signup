@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import { LogControllerDecorator } from "."
 import { LogErrorRepository } from "../../../data/protocols/log-error-repository";
 import { serverError } from "../../../presentation/helpers/http-helper";
@@ -23,7 +22,7 @@ const makeController = (): Controller => {
 
 const makeLogErrorRepository = (): LogErrorRepository => {
   class LogErrorRepositoryStub implements LogErrorRepository {
-    async log(stack: string): Promise<void> {
+    async logError(stack: string): Promise<void> {
       return Promise.resolve();
     }
   }
@@ -94,7 +93,7 @@ describe('Log Controller Decorator', () => {
     fakeError.stack = 'any_stack';
 
     const error = serverError(fakeError);
-    const logSpy = jest.spyOn(logErrorRepositoryStub, 'log');
+    const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError');
 
     jest.spyOn(controllerStub, 'handle').mockImplementationOnce(() => new Promise(resolve => resolve(error)));
 
