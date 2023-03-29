@@ -29,6 +29,7 @@ class InMemoryDatabase {
     const newObj = {
       ...entity,
       id: newGuid(),
+      created_at: new Date()
     } as unknown as Y;
 
     collection.push(newObj);

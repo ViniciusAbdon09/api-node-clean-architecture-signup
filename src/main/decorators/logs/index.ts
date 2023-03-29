@@ -12,7 +12,7 @@ export class LogControllerDecorator<T = any> implements Controller {
 
     if (httpResponse.statusCode === 500) {
       console.error(httpResponse.body, new Date())
-      await this.logErrorRepository.log(httpResponse.body.stack)
+      await this.logErrorRepository.logError(httpResponse.body.stack)
     }
 
     return httpResponse;
