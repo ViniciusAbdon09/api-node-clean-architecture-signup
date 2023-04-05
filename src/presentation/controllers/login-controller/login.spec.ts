@@ -23,7 +23,7 @@ const makeEmailValidator = (): EmailValidator => {
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     async auth(email: string, password: string): Promise<string> {
-      return Promise.resolve('any_token')
+      return new Promise((resolve) => resolve('any_token'))
     }
   }
 
@@ -126,13 +126,11 @@ describe('Login Controller', () => {
   test('Should return 401 if invalid credentials are provided', async () => {
     const { sut, authenticationStub } = makeSut();
 
-    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(async () => new Promise((reject, resolve) => {
-      return resolve(null)
-    }))
+    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve) => resolve('')))
 
     const httpRequest = makefakeRequest();
-
     const httpResponse = await sut.handle(httpRequest);
+
     expect(httpResponse).toEqual(unauthorizedRequest());
   });
 })
