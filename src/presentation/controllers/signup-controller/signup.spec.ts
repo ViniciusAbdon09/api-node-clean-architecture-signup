@@ -1,12 +1,13 @@
 import { AccountModel } from "../../../domain/models/account";
 import { InvalidParamError, MissingParamError, ServerError } from "../../error";
-import { EmailValidator, AddAccount, AddAccountModel, HttpRequest } from "./signup-protocols";
+import { EmailValidator, AddAccount, AddAccountModel, HttpRequest, Validation } from "./signup-protocols";
 import { SignUpController } from "./signup";
 
 interface SutTypes {
   sut: SignUpController,
   emailValidatorStub: EmailValidator,
-  addAccountStub: AddAccount
+  addAccountStub: AddAccount,
+  validationStub: Validation
 }
 
 const makeEmailValidator = (): EmailValidator => {
@@ -17,6 +18,16 @@ const makeEmailValidator = (): EmailValidator => {
   }
 
   return new EmailValidatorStub();
+}
+
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate(input: any): Error | null {
+      return null;
+    }
+  }
+
+  return new ValidationStub();
 }
 
 const makeAddAccount = (): AddAccount => {
@@ -51,12 +62,14 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
   const addAccountStub = makeAddAccount()
-  const sut = new SignUpController(emailValidatorStub, addAccountStub);
+  const validationStub = makeValidation();
+  const sut = new SignUpController(emailValidatorStub, addAccountStub, validationStub);
 
   return {
     sut,
     emailValidatorStub,
-    addAccountStub
+    addAccountStub,
+    validationStub
   }
 }
 
@@ -232,5 +245,23 @@ describe('Signup Controller', () => {
       email: 'valid_email@mail.com',
       password: 'valid_password'
     });
+  });
+
+  test('Should call validation if with correct values', async () => {
+    const { sut, validationStub } = makeSut();
+
+    const validateSpy = jest.spyOn(validationStub, 'validate');
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'invalid_email@email.com',
+        password: 'any_password',
+        passwordConfirm: 'any_password'
+      }
+    }
+
+    await sut.handle(httpRequest);
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 })
