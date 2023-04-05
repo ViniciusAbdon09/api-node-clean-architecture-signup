@@ -1,7 +1,6 @@
-import { Authentication } from "../../../domain/useCases/authentication/authentication";
 import { InvalidParamError, MissingParamError } from "../../error";
 import { badRequest, serverError, unauthorizedRequest } from "../../helpers/http-helper";
-import { EmailValidator, HttpRequest } from "../signup-controller/signup-protocols";
+import { EmailValidator, HttpRequest, Authentication } from "./login-protocols";
 import { LoginController } from "./login";
 
 type SutTypes = {
