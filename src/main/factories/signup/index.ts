@@ -7,6 +7,7 @@ import { Controller } from '../../../presentation/protocols';
 import { AccountModel } from '../../../domain/models/account';
 import { LogControllerDecorator } from '../../decorators/logs';
 import { LogMomoryRepository } from '../../../infra/db/memoryDB/logRepository/log';
+import { makeSignupValidation } from './signupValidation';
 
 export const makeSignupController = (): Controller => {
   const salt = 12;
@@ -14,7 +15,7 @@ export const makeSignupController = (): Controller => {
   const encrypter = new BcryptAdapter(salt);
   const addAccountRepository = new AccountMomoryRepository();
   const addAccount = new DBAddAccount(encrypter, addAccountRepository);
-  const signUpController = new SignUpController(emailValidator, addAccount);
+  const signUpController = new SignUpController(emailValidator, addAccount, makeSignupValidation());
   const errorRepository = new LogMomoryRepository();
   return new LogControllerDecorator<AccountModel>(signUpController, errorRepository);
 }

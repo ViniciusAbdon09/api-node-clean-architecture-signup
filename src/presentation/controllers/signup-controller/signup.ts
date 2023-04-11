@@ -18,7 +18,6 @@ export class SignUpController implements Controller {
         return badRequest(errorValidation);
       }
 
-
       const { name, email, password, passwordConfirm } = httpRequest.body;
 
       if (password !== passwordConfirm) {
