@@ -1,5 +1,5 @@
 import { ValidationRequiredFields } from '../../../presentation/helpers/validators/requiredFieldsValidation/validateRequiredFields';
-import { Validation } from '../../../presentation/helpers/validators/protocols/validation';
+import { Validation } from '../../../presentation/protocols/validation';
 import { ValidationComposite } from '../../../presentation/helpers/validators/ValidationComposite/validation-composite';
 import { ValidationEmail } from '../../../presentation/helpers/validators/emailValidation/validateEmail';
 import { EmailValidatorAdapter } from '../../../utils/email-validator/email-validator-adapter';
