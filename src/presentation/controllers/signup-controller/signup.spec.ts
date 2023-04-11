@@ -2,7 +2,7 @@ import { AccountModel } from "../../../domain/models/account";
 import { MissingParamError, ServerError } from "../../error";
 import { AddAccount, AddAccountModel, HttpRequest, Validation } from "./signup-protocols";
 import { SignUpController } from "./signup";
-import { badRequest } from "../../helpers/http-helper";
+import { badRequest } from "../../helpers/http/http-helper";
 
 interface SutTypes {
   sut: SignUpController,
