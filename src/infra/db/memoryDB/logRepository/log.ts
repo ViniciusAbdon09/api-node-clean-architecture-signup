@@ -1,4 +1,4 @@
-import { LogErrorRepository } from "../../../../data/protocols/log-error-repository";
+import { LogErrorRepository } from "../../../../data/protocols/db/log/log-error-repository";
 import { clientMemoryDB } from "../helpers/repository-in-memory-helper";
 
 export class LogMomoryRepository implements LogErrorRepository {

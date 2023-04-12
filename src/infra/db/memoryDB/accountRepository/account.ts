@@ -1,4 +1,4 @@
-import { AddAccountRepository } from "../../../../data/protocols/add-account-repository";
+import { AddAccountRepository } from "../../../../data/protocols/db/account/add-account-repository";
 import { AccountModel } from "../../../../domain/models/account";
 import { AddAccountModel } from "../../../../domain/useCases/addAccount/addAccount";
 import { clientMemoryDB } from "../helpers/repository-in-memory-helper";
