@@ -3,11 +3,13 @@ import { AccountModel } from "../../../domain/models/account";
 import { DbAuthentication } from "./db-authentication";
 import { AuthenticationModel } from "../../../domain/useCases/authentication/authentication";
 import { HashComparer } from "../../protocols/criptography/hash-compare";
+import { TokenGenerate } from "../../protocols/criptography/token-generate";
 
 interface SutTypes {
   sut: DbAuthentication;
   loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository;
-  hashCompareStub: HashComparer
+  hashCompareStub: HashComparer;
+  tokenGeneratorStub: TokenGenerate;
 }
 
 const makeFakeAccount = (): AccountModel => ({
@@ -42,15 +44,27 @@ const makeHashCompare = (): HashComparer => {
   return new HashCompareStub();
 }
 
+const makeTokenGenerate = (): TokenGenerate => {
+  class TokenGenerateStub implements TokenGenerate {
+    async generate(id: string): Promise<string> {
+      return Promise.resolve('token')
+    }
+  }
+
+  return new TokenGenerateStub();
+}
+
 const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository();
   const hashCompareStub = makeHashCompare();
-  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashCompareStub);
+  const tokenGeneratorStub = makeTokenGenerate();
+  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashCompareStub, tokenGeneratorStub);
 
   return {
     sut,
     loadAccountByEmailRepositoryStub,
-    hashCompareStub
+    hashCompareStub,
+    tokenGeneratorStub
   }
 }
 
@@ -95,5 +109,12 @@ describe('DB Authentication useCase', () => {
     jest.spyOn(hashCompareStub, 'compare').mockReturnValueOnce(Promise.resolve(false))
     const accessToken = await sut.auth(makeFakeAuthentication());
     expect(accessToken).toBe(false)
+  });
+
+  test('Should call TokenGenerator with correct id', async () => {
+    const { sut, tokenGeneratorStub } = makeSut();
+    const generateSpy = jest.spyOn(tokenGeneratorStub, 'generate')
+    await sut.auth(makeFakeAuthentication());
+    expect(generateSpy).toHaveBeenCalledWith(makeFakeAccount().id)
   });
 })
