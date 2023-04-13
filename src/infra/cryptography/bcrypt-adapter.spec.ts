@@ -56,4 +56,10 @@ describe('bcrypt adapter', () => {
     await sut.compare('any_value', 'any_hash');
     expect(compareSty).toHaveBeenCalledWith('any_value', 'any_hash')
   });
+
+  test('Should return true when compare succeeds', async () => {
+    const { sut } = makeSut();
+    const isMatch = await sut.compare('any_value', 'hash_value');
+    expect(isMatch).toBeTruthy();
+  })
 })
