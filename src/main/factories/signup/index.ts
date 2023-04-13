@@ -1,5 +1,5 @@
 import { DBAddAccount } from '../../../data/useCases/add-account/db-add-account';
-import { BcryptAdapter } from '../../../infra/cryptography/bcrypt-adapter';
+import { BcryptAdapter } from '../../../infra/cryptography/bcrypt/bcrypt-adapter';
 import { SignUpController } from '../../../presentation/controllers/signup-controller/signup';
 import { AccountMomoryRepository } from '../../../infra/db/memoryDB/accountRepository/account';
 import { Controller } from '../../../presentation/protocols';
