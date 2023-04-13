@@ -27,7 +27,8 @@ const makeAddAccount = (): AddAccount => {
         id: 'valid_id',
         name: 'valid_name',
         email: 'valid_email@mail.com',
-        password: 'valid_password'
+        password: 'valid_password',
+        accessToken: ''
       };
 
       return new Promise((resolve) => {
@@ -111,7 +112,8 @@ describe('Signup Controller', () => {
       id: 'valid_id',
       name: 'valid_name',
       email: 'valid_email@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      accessToken: ''
     });
   });
 

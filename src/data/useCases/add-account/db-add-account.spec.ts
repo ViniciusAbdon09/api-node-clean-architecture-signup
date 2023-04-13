@@ -19,6 +19,7 @@ const makeAddAccountRepository = (): AddAccountRepository => {
         name: 'valid_name',
         email: 'valid_mail',
         password: 'hashed_password',
+        accessToken: ''
       }
       return new Promise(resolve => resolve(fakeAccount))
     }
@@ -123,7 +124,8 @@ describe('DB Add Account', () => {
       id: 'valid_id',
       name: 'valid_name',
       email: 'valid_mail',
-      password: 'hashed_password'
+      password: 'hashed_password',
+      accessToken: ''
     })
   })
 });
