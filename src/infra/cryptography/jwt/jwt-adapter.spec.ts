@@ -1,3 +1,4 @@
+import { rejects } from 'assert';
 import jwt from 'jsonwebtoken';
 import { Encrypter } from '../../../data/protocols/criptography/encrypter';
 import { JwtAdapter } from './jwt-adapter';
@@ -37,5 +38,12 @@ describe('JWT Adapter', () => {
     const { sut } = makeSut();
     const accessToken = await sut.encrypt({ id: 'any_id' });
     expect(accessToken).toBe('any_token')
+  });
+
+  test('Should throws if sign throws', async () => {
+    const { sut } = makeSut();
+    jest.spyOn(jwt, 'sign').mockImplementationOnce(() => Promise.reject(() => { throw new Error() }));
+    const promise = sut.encrypt({ id: 'any_id' });
+    await expect(promise).rejects.toThrow()
   })
 })
