@@ -1,5 +1,5 @@
 import { clientMemoryDB } from "../helpers/repository-in-memory-helper";
-import { AccountMomoryRepository } from "./account";
+import { AccountMomoryRepository } from "./account-memory-repository";
 
 describe('Account Mongo Repository', () => {
   afterAll(() => {
