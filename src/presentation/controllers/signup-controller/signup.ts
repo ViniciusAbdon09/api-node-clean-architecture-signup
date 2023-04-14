@@ -1,41 +1,25 @@
-import { InvalidParamError, MissingParamError } from "../../error";
-import { badRequest, serverError, ok } from "../../helpers/http-helper"
-import { Controller, EmailValidator, HttpRequest, HttpResponse, AddAccount, AccountModel } from "./signup-protocols";
+import { badRequest, serverError, ok } from "../../helpers/http/http-helper"
+import { Controller, HttpRequest, HttpResponse, AddAccount, AccountModel, Validation } from "./signup-protocols";
 
 export class SignUpController implements Controller {
-  private readonly emailValidator: EmailValidator
-  private readonly addAccount: AddAccount
+  constructor(
+    private readonly addAccount: AddAccount,
+    private readonly validation: Validation
+  ) { }
 
-  constructor(emailValidator: EmailValidator, addAccount: AddAccount) {
-    this.emailValidator = emailValidator;
-    this.addAccount = addAccount;
-  }
-
-  async handle(httpRequest: HttpRequest): Promise<HttpResponse<AccountModel>> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['name', 'email', 'password', 'passwordConfirm']
+      const errorValidation = this.validation.validate(httpRequest.body);
 
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field));
-        }
+      if (errorValidation) {
+        return badRequest(errorValidation);
       }
 
-      const { name, email, password, passwordConfirm } = httpRequest.body;
-
-      if (password !== passwordConfirm) {
-        return badRequest(new InvalidParamError('passwordConfirm'));
-      }
-
-      const isValidEmail = this.emailValidator.isValid(email);
-
-      if (!isValidEmail) {
-        return badRequest(new InvalidParamError('email'));
-      }
+      const { name, email, password } = httpRequest.body;
 
       const account = await this.addAccount.add({ name, email, password });
 
-      return ok<AccountModel>(account)
+      return ok({ name: account.name, email: account.email })
     } catch (e) {
       return serverError(e as Error)
     }

@@ -5,18 +5,18 @@ interface Entity {
 }
 
 class InMemoryDatabase {
-  private data: { [key: string]: Entity[] } = {};
+  private data: { [key: string]: any[] } = {};
 
-  addCollection<T extends Entity>(name: string): Entity[] {
+  addCollection<T extends Entity>(name: string): T[] {
     const collection = this.data[name];
 
     if (collection) {
-      return collection
+      return collection as T[]
     }
 
-    this.data[name] = [];
+    this.data[name] = [] as T[];
 
-    return this.data[name];
+    return this.data[name] as T[];
   }
 
   add<T, Y extends Entity>(collectionName: string, entity: T): Y {
@@ -44,6 +44,15 @@ class InMemoryDatabase {
     }
 
     return collection.find((entity) => entity.id === id) as T | undefined;
+  }
+
+  getByOne<T extends Entity>(collectionName: string, key: keyof T, value: any): T | null {
+    const collection = this.data[collectionName];
+    if (!collection) {
+      throw new Error(`Collection '${collectionName}' does not exist.`);
+    }
+
+    return collection.find((entity) => entity[key] === value) as T | null;
   }
 
   getAll<T extends Entity>(collectionName: string): T[] {

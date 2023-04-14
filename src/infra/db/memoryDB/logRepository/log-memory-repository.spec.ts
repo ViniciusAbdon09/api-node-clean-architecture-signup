@@ -1,5 +1,5 @@
 import { clientMemoryDB } from "../helpers/repository-in-memory-helper";
-import { LogMomoryRepository } from "./log";
+import { LogMomoryRepository } from "./log-memory-repository";
 
 interface SutTypes {
   sut: LogMomoryRepository
