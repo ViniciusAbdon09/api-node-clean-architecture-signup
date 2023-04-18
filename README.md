@@ -31,3 +31,7 @@
     - Comando pare rodar a imagem em mode interativo e abrir o bash
 ## docker run -p 5000:5000 clean-node-api
     - Rodar a aplicação e fazer um mapeamento de portas
+## docker-compose up
+## docker-compose up -d
+    - Roda o docker compose para levantar os containers configurados
+    - o -d é para rodar em background e não travar o terminal
