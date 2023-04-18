@@ -21,3 +21,13 @@
 
 ## lib lint-staged
     - Será responsável por realizar o lint apenas do código que se encontra na area de steged do git
+
+### DOCKER
+
+## docker build -t nome-do-projeto caminhoDODockerFile
+    - Comando para realizar o build e criar a imagem da aplicação baseada no dockerfile
+
+## docker run -it nome-da-imagem sh
+    - Comando pare rodar a imagem em mode interativo e abrir o bash
+## docker run -p 5000:5000 clean-node-api
+    - Rodar a aplicação e fazer um mapeamento de portas

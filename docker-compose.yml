@@ -1,0 +1,25 @@
+# SIMPLIFICAR A MANIPULAÇÃO DOS CONTAINERS
+version: "3"
+
+#CONTAINERS QUE IREMOS UTILIZAR GERAR
+services:
+  mongo:
+    container_name: mongo-container
+    imagem: mongo
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  api:
+    container_name: api-container
+    build: .
+    image: clean-node-api
+    restart: always
+    command: npm start
+    volumes:
+      - ./dist:/usr/src/clea-node-api/dist
+    ports:
+      - "5050:5050"
+    links:
+      - mongo

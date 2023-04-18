@@ -6,9 +6,3 @@ WORKDIR /usr/src/clea-node-api
 COPY ./package.json .
 # RODAR O COMANDO PARA INSTALAR AS DEPENDENCIAS que serão utilizadas em produção apenas
 RUN npm install --only=prod
-# COPiAR A pASTA DIST QUE É A APLICAÇÂO COMPILADA E PRONTA PARA PUBLICAÇÃO
-COPY ./dist ./dist
-# ABRIR UM PORTA PARA APLICAÇÃO FICAR EXPOSTA
-EXPOSE 5000
-# RODAR UM COMANDO PARA STARTAR A APLICAÇÃO
-CMD npm start
