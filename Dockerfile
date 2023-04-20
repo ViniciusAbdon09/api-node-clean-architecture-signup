@@ -1,8 +1,0 @@
-# VERSÃO DO NODE
-FROM node:16
-# ONDE SERÁ PUBLICADO DENTRO DO DOCKERFILE DIRETORIO RAIZ DO PROJETO
-WORKDIR /usr/src/clean-node-api
-# COPIANDO O PACKAGE JSON PARA A RAIZ DO DOCKER
-COPY ./package.json .
-# RODAR O COMANDO PARA INSTALAR AS DEPENDENCIAS que serão utilizadas em produção apenas
-RUN npm install --only=prod
