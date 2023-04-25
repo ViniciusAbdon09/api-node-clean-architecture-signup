@@ -2,7 +2,7 @@ import { AccountModel } from "../../../domain/models/account";
 import { MissingParamError, ServerError } from "../../error";
 import { AddAccount, AddAccountModel, HttpRequest, Validation, Authentication, AuthenticationModel } from "./signup-protocols";
 import { SignUpController } from "./signup";
-import { badRequest } from "../../helpers/http/http-helper";
+import { badRequest, serverError } from "../../helpers/http/http-helper";
 
 interface SutTypes {
   sut: SignUpController,
@@ -175,5 +175,16 @@ describe('Signup Controller', () => {
 
     await sut.handle(httpRequest);
     expect(authSpy).toHaveBeenCalledWith({ email: httpRequest.body.email, password: httpRequest.body.password });
+  });
+
+  test('Should return 500 if authentication throws', async () => {
+    const { sut, authenticationStub } = makeSut();
+
+    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+
+    const httpRequest = makefakeRequest();
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 })
