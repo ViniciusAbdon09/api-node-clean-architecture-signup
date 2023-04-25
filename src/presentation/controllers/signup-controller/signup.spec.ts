@@ -132,8 +132,7 @@ describe('Signup Controller', () => {
 
     expect(httpResponse.statusCode).toBe(200);
     expect(httpResponse.body).toEqual({
-      name: 'valid_name',
-      email: 'valid_email@mail.com',
+      accessToken: 'any_token'
     });
   });
 
