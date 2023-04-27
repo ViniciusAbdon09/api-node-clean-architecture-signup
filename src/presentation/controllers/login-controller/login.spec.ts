@@ -1,5 +1,4 @@
-import { InvalidParamError, MissingParamError } from "../../error";
-import { badRequest, serverError, unauthorizedRequest, ok } from "../../helpers/http/http-helper";
+import { serverError, unauthorizedRequest, ok } from "../../helpers/http/http-helper";
 import { HttpRequest, Authentication, Validation, AuthenticationModel } from "./login-protocols";
 import { LoginController } from "./login";
 

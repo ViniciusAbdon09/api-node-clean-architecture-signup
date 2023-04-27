@@ -1,6 +1,6 @@
-import { InvalidParamError } from "../../../error";
-import { EmailValidator } from "../../../protocols/emailValidator";
-import { Validation } from "../../../protocols/validation";
+import { InvalidParamError } from "../../../presentation/error";
+import { EmailValidator } from "../../protocols/emailValidator";
+import { Validation } from "../../../presentation/protocols/validation";
 
 export class ValidationEmail implements Validation {
   constructor(private readonly fieldName: string, private readonly emailValidator: EmailValidator) { }
